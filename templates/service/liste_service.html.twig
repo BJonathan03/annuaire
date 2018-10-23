@@ -1,0 +1,5 @@
+{% for service in services %}
+    <li>
+        <a href="{{ path('service_show', {'id':service.id}) }}">{{ service.name }}</a>
+    </li>
+{% endfor %}

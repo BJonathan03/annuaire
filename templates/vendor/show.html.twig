@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="main">
+    <div class="main-inner">
+    <div class="container">
+    <div class="content">
+
+
+    <div class="document-title">
+        <h1>{{ vendor.name }}</h1>
+        <h2 style="color:white">Nos services : </h2>
+        {% for services in vendor.service %}
+            <ul class="breadcrumb">
+                <li><a href="{{ path('service_show', {'id':services.id}) }}">{{ services.name }}</a></li>
+            </ul>
+        {% endfor %}
+
+    </div><!-- /.document-title -->
+
+
+    <div class="posts post-detail">
+
+
+        <div class="row">
+            <div class="col-sm-4">
+                <h3>Address</h3>
+
+                <p>
+                    {{ vendor.adresse }} {{ vendor.number }}<br>
+                    {{ vendor.cp.cp }} {{ vendor.locality.locality }}
+                </p>
+            </div><!-- /.col-sm-4 -->
+
+            <div class="col-sm-4">
+                <h3>Contacts</h3>
+
+                <p>
+                    Par telephone : {{ vendor.phone }} <br>
+                    Par email : <a href="mailto({{ vendor.emailContact }}" > {{ vendor.emailContact }}</a>
+                </p>
+            </div><!-- /.col-sm-4 -->
+
+            <div class="col-sm-4">
+                <h3>Social Profiles</h3>
+
+                <ul class="social-links nav nav-pills">
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                 </ul>
+            </div><!-- /.col-sm-4 -->
+        </div><!-- /.row -->
+
+    </div><!-- /.comments -->
+    </div>
+    </div>
+    </div>
+    </div>
+
+{% endblock %}
