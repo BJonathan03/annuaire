@@ -50,9 +50,34 @@ class Vendor extends Visitor
      */
     private $service;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="vendor")
+     */
+    private $logo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="vendor")
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="logo")
+     */
+    private $logos;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="pictures")
+     */
+    private $pictures;
+
+
     public function __construct()
     {
         $this->service = new ArrayCollection();
+        $this->logo = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->logos = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 /*
     public function getId(): ?int
@@ -150,4 +175,106 @@ class Vendor extends Visitor
     {
         return $this->getName();
     }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getLogo(): Collection
+    {
+        return $this->logo;
+    }
+
+    public function addLogo(Image $logo): self
+    {
+        if (!$this->logo->contains($logo)) {
+            $this->logo[] = $logo;
+            $logo->setVendor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLogo(Image $logo): self
+    {
+        if ($this->logo->contains($logo)) {
+            $this->logo->removeElement($logo);
+            // set the owning side to null (unless already changed)
+            if ($logo->getVendor() === $this) {
+                $logo->setVendor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setVendor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getVendor() === $this) {
+                $image->setVendor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getLogos(): Collection
+    {
+        return $this->logos;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Image $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setPictures($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Image $picture): self
+    {
+        if ($this->pictures->contains($picture)) {
+            $this->pictures->removeElement($picture);
+            // set the owning side to null (unless already changed)
+            if ($picture->getPictures() === $this) {
+                $picture->setPictures(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

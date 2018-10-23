@@ -26,6 +26,17 @@ class Image
      */
     private $sequence;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vendor", inversedBy="logos")
+     */
+    private $logo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vendor", inversedBy="pictures")
+     */
+    private $pictures;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,4 +65,29 @@ class Image
 
         return $this;
     }
+
+    public function getLogo(): ?Vendor
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?Vendor $logo): self
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getPictures(): ?Vendor
+    {
+        return $this->pictures;
+    }
+
+    public function setPictures(?Vendor $pictures): self
+    {
+        $this->pictures = $pictures;
+
+        return $this;
+    }
+
 }
