@@ -2,31 +2,151 @@
 
 
 {% block body %}
+
+
     <div class="main">
     <div class="main-inner">
-    <div class="container">
-    <div class="content">
+        <div class="container">
+            <div class="content">
+
+                <div class="document-title">
+                    <h1>Bienvenue dans la liste de nos prestataires de services</h1>
+
+                </div><!-- /.document-title -->
 
 
 
-    <div class="page-title">
-        <h1>Bienvenue dans la liste prestataires de services</h1>
-    </div><!-- /.page-title -->
-    <div class="posts post-detail">
+                <form class="filter" method="post" action="?">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <input type="text" placeholder="Keyword" class="form-control">
+                            </div><!-- /.form-group -->
+                        </div><!-- /.col-* -->
 
-        {% for vendor in vendors %}
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" title="Select Location">
+                                    <option>Bronx</option>
+                                    <option>Brooklyn</option>
+                                    <option>Manhattan</option>
+                                    <option>Staten Island</option>
+                                    <option>Queens</option>
+                                </select>
+                            </div><!-- /.form-group -->
+                        </div><!-- /.col-* -->
 
-            <h2>{{ vendor.name }} </h2>
-            <a href="{{ path('vendor_show', {'id':vendor.id}) }}" class="btn btn-primary">Plus d'infos...</a>
-        {% endfor %}
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <select class="form-control" title="Select Category">
+                                    <option value="">Automotive</option>
+                                    <option value="">Jobs</option>
+                                    <option value="">Nightlife</option>
+                                    <option value="">Services</option>
+                                </select>
+                            </div><!-- /.form-group -->
+                        </div><!-- /.col-* -->
+                    </div><!-- /.row -->
 
-    </div><!-- /.comments -->
+                    <hr>
 
-    <hr/>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="filter-actions">
+                                <a href="#"><i class="fa fa-close"></i> Reset Filter</a>
+                                <a href="#"><i class="fa fa-save"></i> Save Search</a>
+                            </div><!-- /.filter-actions -->
+                        </div><!-- /.col-* -->
 
-    </div>
-    </div>
-    </div>
-    </div>
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-primary">Redefine Search Result</button>
+                        </div><!-- /.col-* -->
+                    </div><!-- /.row -->
+                </form>
+
+
+                <h2 class="page-title">
+                    1802 results matching your query
+
+                    <form method="get" action="?" class="filter-sort">
+                        <div class="form-group">
+                            <select title="Sort by">
+                                <option name="price">Price</option>
+                                <option name="rating">Rating</option>
+                                <option name="title">Title</option>
+                            </select>
+                        </div><!-- /.form-group -->
+
+                        <div class="form-group">
+                            <select title="Order">
+                                <option name="ASC">Asc</option>
+                                <option name="DESC">Desc</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                    </form>
+                </h2><!-- /.page-title -->
+
+                {% for vendor in vendors %}
+
+                    <h3>{{ vendor.name }} </h3>
+
+
+                <div class="cards-row">
+
+                    <div class="card-row">
+                        <div class="card-row-inner">
+                            <div class="card-row-image" data-background-image="assets/img/tmp/product-1.jpg">
+                                <div class="card-row-label">{{ vendor.locality.locality }}</div><!-- /.card-row-label -->
+
+                                <div class="card-row-price">{{ vendor.name }}</div><!-- -->
+
+                            </div><!-- /.card-row-image -->
+
+                            <div class="card-row-properties">
+                                <dl>
+
+                                    <dd>Adresse</dd><dt>{{  vendor.adresse }} {{  vendor.number }}</dt>
+
+                                    <dd>Localité</dd><dt>{{ vendor.cp.cp }} {{ vendor.locality.locality }}</dt>
+
+                                    <dd>Website</dd><dt><a href="{{ vendor.website }}">{{ vendor.website }}</a></dt>
+
+
+                                    <dd>Rating</dd>
+                                    <dt>
+                                        <div class="card-row-rating">
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                        </div><!-- /.card-row-rating -->
+                                    </dt>
+
+                                    <dd>Informations complémentaires : </dd><dt><a href="{{ path('vendor_show', {'id':vendor.id}) }}" >C'est ici... ;) </a></dt>
+
+                                </dl>
+                            </div><!-- /.card-row-properties -->
+                        </div><!-- /.card-row-inner -->
+                    </div><!-- /.card-row -->
+
+                    {% endfor %}
+
+
+
+
+                <div class="pager">
+                    <ul>
+                        <li><a href="#">Prev</a></li>
+                        <li><a href="#">5</a></li>
+                        <li class="active"><a>6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">Next</a></li>
+                    </ul>
+                </div><!-- /.pagination -->
+
+
+            </div><!-- /.content -->
+        </div><!-- /.container -->
+    </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+
+
 
 {% endblock %}
