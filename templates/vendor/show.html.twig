@@ -2,60 +2,125 @@
 
 {% block body %}
     <div class="main">
-    <div class="main-inner">
-    <div class="container">
-    <div class="content">
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
 
 
-    <div class="document-title">
-        <h1>{{ vendor.name }}</h1>
-        <h2 style="color:white">Nos services : </h2>
-        {% for services in vendor.service %}
-            <ul class="breadcrumb">
-                <li><a href="{{ path('service_show', {'id':services.id}) }}">{{ services.name }}</a></li>
-            </ul>
-        {% endfor %}
+                    <div class="document-title">
+                        <h1>{{ vendor.name }}</h1>
+                        <h2 style="color:white">Nos services : </h2>
+                        {% for services in vendor.service %}
+                            <ul class="breadcrumb">
+                                <li><a href="{{ path('service_show', {'id':services.id}) }}">{{ services.name }}</a>
+                                </li>
+                            </ul>
+                        {% endfor %}
 
-    </div><!-- /.document-title -->
-
-
-    <div class="posts post-detail">
+                    </div><!-- /.document-title -->
 
 
-        <div class="row">
-            <div class="col-sm-4">
-                <h3>Address</h3>
+                    <div class="posts post-detail">
 
-                <p>
-                    {{ vendor.adresse }} {{ vendor.number }}<br>
-                    {{ vendor.cp.cp }} {{ vendor.locality.locality }}
-                </p>
-            </div><!-- /.col-sm-4 -->
 
-            <div class="col-sm-4">
-                <h3>Contacts</h3>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h3>Address</h3>
 
-                <p>
-                    Par telephone : {{ vendor.phone }} <br>
-                    Par email : <a href="mailto({{ vendor.emailContact }}" > {{ vendor.emailContact }}</a>
-                </p>
-            </div><!-- /.col-sm-4 -->
+                                <p>
+                                    {{ vendor.adresse }} {{ vendor.number }}<br>
+                                    {{ vendor.cp.cp }} {{ vendor.locality.locality }}
+                                </p>
 
-            <div class="col-sm-4">
-                <h3>Social Profiles</h3>
+                            </div><!-- /.col-sm-4 -->
 
-                <ul class="social-links nav nav-pills">
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                 </ul>
-            </div><!-- /.col-sm-4 -->
-        </div><!-- /.row -->
+                            <div class="col-sm-4">
+                                <h3>Contacts</h3>
 
-    </div><!-- /.comments -->
-    </div>
-    </div>
-    </div>
+                                <p>
+                                    Par telephone : {{ vendor.phone }} <br>
+                                    Par email : <a
+                                            href="mailto({{ vendor.emailContact }}"> {{ vendor.emailContact }}</a>
+                                </p>
+                            </div><!-- /.col-sm-4 -->
+
+                            <div class="col-sm-4">
+                                <h3>Social Profiles</h3>
+
+                                <ul class="social-links nav nav-pills">
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                </ul>
+                            </div><!-- /.col-sm-4 -->
+                        </div><!-- /.row -->
+
+                    </div><!-- /.comments -->
+
+                    <div class="mb80">
+                        <div class="hero-slider">
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active">
+                                        <div class="item-bg"
+                                             style="background-image: url('assets/img/tmp/slider-2.jpg')"></div>
+                                        <img src="{{ asset('assets/img/tmp/slider-2.jpg') }}" alt="">
+
+                                        <div class="carousel-caption">
+                                            <div class="hero-slider-content">
+                                                <h1>Nos installations</h1>
+                                            </div><!-- /.hero-slider-content -->
+
+                                        </div><!-- /.carousel-caption -->
+                                    </div><!-- /.item -->
+
+                                    <div class="item">
+                                        <div class="item-bg"
+                                             style="background-image: url('assets/img/tmp/slider-1.jpg')"></div>
+                                        <img src="{{ asset('assets/img/tmp/slider-1.jpg') }}" alt="">
+
+                                        <div class="carousel-caption">
+                                            <div class="hero-slider-content">
+                                                <h1>Notre équipe</h1>
+                                            </div><!-- /.hero-slider-content -->
+
+                                        </div><!-- /.carousel-caption -->
+                                    </div><!-- /.item -->
+
+                                    <div class="item">
+                                        <div class="item-bg"
+                                             style="background-image: url('assets/img/tmp/slider-3.jpg')"></div>
+                                        <img src="{{ asset('assets/img/tmp/slider-2.jpg') }}" alt="">
+
+                                        <div class="carousel-caption">
+                                            <div class="hero-slider-content">
+                                                <h1>O`Harrys Tuning Workshop</h1>
+
+                                            </div><!-- /.hero-slider-content -->
+
+                                        </div><!-- /.carousel-caption -->
+                                    </div><!-- /.item -->
+                                </div><!-- /.carousel-inner -->
+
+                                <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                                   data-slide="prev">
+                                    <i class="fa fa-long-arrow-left"></i>
+                                </a>
+
+                                <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                                   data-slide="next">
+                                    <i class="fa fa-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div><!-- /.hero-slider -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

@@ -1,5 +1,7 @@
 {% for vendor in vendors %}
-    <li>
-        <a href="{{ path('vendor_show', {'id':vendor.id }) }}">{{ vendor.name }}</a>
-    </li>
+    {% if  vendor.banni == 0 %}
+        <li>
+            <a href="{{ path('vendor_show', {'id':vendor.id }) }}">{{ vendor.name }}</a>
+        </li>
+    {% endif %}
 {% endfor %}
