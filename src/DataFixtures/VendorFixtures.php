@@ -66,4 +66,12 @@ class VendorFixtures extends Fixture
 
         $manager->flush();
     }
+
+    public function getDependencies()
+    {
+        return array(
+            CpFixtures::class,
+            AnnuaireFixtures::class
+        );
+    }
 }

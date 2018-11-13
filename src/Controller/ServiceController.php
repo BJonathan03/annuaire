@@ -18,6 +18,14 @@ class ServiceController extends AbstractController
         ]);
     }
 
+    public function imageDuMois(ServiceRepository $repo){
+
+        $services = $repo->findOneBy(['front' => 1 ]);
+        return $this->render('service/liste_image.html.twig', [
+            'services' => $services
+        ]);
+    }
+
 
     /**
      * @Route("/", name="home")
@@ -56,5 +64,7 @@ class ServiceController extends AbstractController
             'service'=> $service
         ]);
     }
+
+
 
 }
