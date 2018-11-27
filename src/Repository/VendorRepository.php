@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+
 use App\Entity\Vendor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -34,7 +35,26 @@ class VendorRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
     */
+
+    /**
+     * @param $name
+     * @return Vendor[]
+     */
+
+    public function findVendorByName($name): array
+    {
+        $string = '%' . $name . '%';
+
+        $qb = $this->createQueryBuilder('v')
+            ->where('v.name LIKE :name')
+            ->setParameter('name', $string)
+            ->orderBy('v.name', 'ASC')
+            ;
+
+        return $qb->getQuery()->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Vendor

@@ -12,22 +12,27 @@
     <div class="page-title">
         <h1>{{ service.name }}</h1>
     </div><!-- /.page-title -->
-<div class="posts post-detail">
+    <div class="posts post-detail">
 
-    <p>{{ service.description }}</p>
-    <img src="{{ service.photo.url }}" alt="Désolé, l\'image n'est pas disponible pour le moment" style='height:150px' >
-    {% if service.front %}
-        <p>Service mis en avant :</p> <img src="{{ asset('assets/img/valide.png') }}" width="50" height="50" alt="Oui"/>
-    {% else %}
-        <p>Service mis en avant :</p> <img src="{{ asset('assets/img/invalide.png') }}" width="50" height="50" alt="Non"/>
-    {% endif %}
-    {% if service.validity %}
-        <p >Service validé :</p><img src="{{ asset('assets/img/valide.png') }}" width="50" height="50" alt="Oui"/>
-    {% else %}
-        <p >Service validé :</p><img src="{{ asset('assets/img/invalide.png') }}" width="50" height="50" alt="Non"/>
-    {% endif %}
+        <p>{{ service.description }}</p>
+        <img src="{{ service.photo.url }}" alt="Désolé, l\'image n'est pas disponible pour le moment"
+             style='height:150px'>
+        {% if service.front %}
+            <p>Service mis en avant :</p> <img src="{{ asset('assets/img/valide.png') }}" width="50" height="50"
+                                               alt="Oui"/>
+        {% else %}
+            <p>Service mis en avant :</p> <img src="{{ asset('assets/img/invalide.png') }}" width="50" height="50"
+                                               alt="Non"/>
+        {% endif %}
+        {% if service.validity %}
+            <p>Service validé :</p><img src="{{ asset('assets/img/valide.png') }}" width="50" height="50" alt="Oui"/>
+        {% else %}
+            <p>Service validé :</p><img src="{{ asset('assets/img/invalide.png') }}" width="50" height="50" alt="Non"/>
+        {% endif %}
 
-</div><!-- /.comments -->
+    </div><!-- /.comments -->
 
-{% endblock %}
+    <div class="page-title">
+        <h1>{{ service.name }}</h1>
+    </div><!-- /.page-title -->
 

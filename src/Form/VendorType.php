@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Vendor;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class VendorType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('adresse')
+            ->add('number')
+            ->add('banni')
+            ->add('email')
+            ->add('inscription')
+            ->add('date')
+            ->add('password')
+            ->add('try')
+            ->add('name')
+            ->add('phone')
+            ->add('tva')
+            ->add('website')
+            ->add('emailContact')
+            ->add('cp')
+            ->add('locality')
+            ->add('service')
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Vendor::class,
+        ]);
+    }
+}

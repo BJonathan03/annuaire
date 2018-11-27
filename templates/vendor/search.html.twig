@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-
 
     <div class="main">
         <div class="main-inner">
@@ -13,53 +11,6 @@
                         <h1>Bienvenue dans la liste de nos prestataires de services</h1>
 
                     </div><!-- /.document-title -->
-
-
-                    <form class="filter" method="get" action="http://localhost:8000/vendors/search">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <input type="text" placeholder="name" class="form-control" name="name">
-                                </div><!-- /.form-group -->
-                            </div><!-- /.col-* -->
-
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <select class="form-control" title="Locality" name="locality">
-                                        {% for locality in locality %}
-                                            <option>{{ locality.locality }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div><!-- /.form-group -->
-                            </div><!-- /.col-* -->
-
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <select class="form-control" title="Select Category" name="category">
-                                        {% for locality in locality %}
-                                            <option>{{ locality.locality }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div><!-- /.form-group -->
-                            </div><!-- /.col-* -->
-                        </div><!-- /.row -->
-
-                        <hr>
-
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <div class="filter-actions">
-                                    <a href="#"><i class="fa fa-close"></i> Reset Filter</a>
-                                    <a href="#"><i class="fa fa-save"></i> Save Search</a>
-                                </div><!-- /.filter-actions -->
-                            </div><!-- /.col-* -->
-
-                            <div class="col-sm-4">
-                                <button type="submit" class="btn btn-primary">Redefine Search Result</button>
-                            </div><!-- /.col-* -->
-                        </div><!-- /.row -->
-                    </form>
-
 
                     <h2 class="page-title">
                         1802 results matching your query
@@ -91,7 +42,7 @@
 
                             <div class="card-row">
                                 <div class="card-row-inner">
-                                    <div class="card-row-image" data-background-image="assets/img/tmp/product-1.jpg">
+                                    <div class="card-row-image" data-background-image="{{ asset('assets/img/tmp/product-1.jpg') }}">
                                         <div class="card-row-label">{{ vendor.locality.locality }}</div>
                                         <!-- /.card-row-label -->
 
@@ -146,7 +97,5 @@
             </div><!-- /.container -->
         </div><!-- /.main-inner -->
     </div><!-- /.main -->
-
-
 
 {% endblock %}

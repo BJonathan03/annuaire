@@ -65,6 +65,4 @@ class ServiceController extends AbstractController
         ]);
     }
 
-
-
 }

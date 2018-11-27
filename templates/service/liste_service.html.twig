@@ -1,5 +1,5 @@
 {% for service in services %}
-    {% if service.validity == 0 %}
+    {% if service.validity == 1 %}
         <li>
             <a href="{{ path('service_show', {'id':service.id}) }}">{{ service.name }}</a>
         </li>
