@@ -40,10 +40,11 @@ class VendorRepository extends ServiceEntityRepository
 
     /**
      * @param $name
+     * @param $locality
      * @return Vendor[]
      */
 
-    public function findVendorByName($name): array
+    public function findVendor($name): array
     {
         $string = '%' . $name . '%';
 

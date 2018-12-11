@@ -54,13 +54,12 @@ class VendorController extends AbstractController
      *
      */
 
-    public function searchByName(Request $request){
+    public function searchVendor(Request $request){
         $name = $request->query->get('name') ?? null;
-
-       // $locality = $request->query->get('locality') ?? null;
+        $locality = $request->query->get('locality') ?? null;
       //  $category = $request->query->get('category') ?? null;
 
-        $search_name = $this->getRepo()->findVendorByName($name);
+        $search_name = $this->getRepo()->findVendor($name, $locality);
         return $this->render('vendor/search.html.twig', [
             'controller_name' => 'vendorController',
             'vendors' => $search_name
