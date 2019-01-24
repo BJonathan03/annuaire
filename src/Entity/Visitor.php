@@ -3,15 +3,25 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VisitorRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"vendor" = "Vendor", "client" = "Client"})
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="un autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier"
+ * )
  */
-abstract class Visitor
+abstract class Visitor implements UserInterface
 {
+
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -21,11 +31,13 @@ abstract class Visitor
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Vous devez renseigner votre adresse")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Vous devez renseigner le numéro de votre maison")
      */
     private $number;
 
@@ -36,8 +48,10 @@ abstract class Visitor
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Veuillez donner un email valide !")
+     *
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="boolean")
@@ -51,6 +65,7 @@ abstract class Visitor
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=8, minMessage="Votre mot de passe doit faire au moins 8 caractères")
      */
     private $password;
 
@@ -62,6 +77,7 @@ abstract class Visitor
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Cp", inversedBy="visitors")
      * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $cp;
 
@@ -70,6 +86,19 @@ abstract class Visitor
      * @ORM\JoinColumn(nullable=false)
      */
     private $locality;
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function initialize(){
+        $this->banni = 1;
+        $this->date = new \DateTime('now');
+        $this->inscription = 0;
+        $this->try = 0;
+
+    }
+
 
     public function getId(): ?int
     {
@@ -195,4 +224,28 @@ abstract class Visitor
 
         return $this;
     }
+
+    public function getRoles()
+    {
+        $roles[] = 'ROLE_USER';
+
+        return $roles;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+
 }

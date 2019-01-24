@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ServiceRepository")
@@ -20,11 +21,13 @@ class Service
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Assert\NotBlank(message="Vous devez renseigner le nom de la catégorie")
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=120, minMessage="Vous devez décrire la catégorie. Minimum 120 caractères")
      */
     private $description;
 
@@ -145,5 +148,12 @@ class Service
         $this->photo = $photo;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+
+        // TODO: Implement __toString() method.
     }
 }

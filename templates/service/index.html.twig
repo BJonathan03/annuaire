@@ -1,1 +1,121 @@
 {% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="main">
+    <div class="main-inner">
+        <div class="container">
+            <form class="filter" method="post" action="?">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <input type="text" placeholder="Keyword" class="form-control">
+                        </div><!-- /.form-group -->
+                    </div><!-- /.col-* -->
+
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" title="Select Location">
+                                <option>Bronx</option>
+                                <option>Brooklyn</option>
+                                <option>Manhattan</option>
+                                <option>Staten Island</option>
+                                <option>Queens</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div><!-- /.col-* -->
+
+                    <div class="col-sm-12 col-md-4">
+                        <div class="form-group">
+                            <select class="form-control" title="Select Category">
+                                <option value="">Automotive</option>
+                                <option value="">Jobs</option>
+                                <option value="">Nightlife</option>
+                                <option value="">Services</option>
+                            </select>
+                        </div><!-- /.form-group -->
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="filter-actions">
+                            <a href="#"><i class="fa fa-close"></i> Reset Filter</a>
+                            <a href="#"><i class="fa fa-save"></i> Save Search</a>
+                        </div><!-- /.filter-actions -->
+                    </div><!-- /.col-* -->
+
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary">Redefine Search Result</button>
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+            </form>
+
+
+            <h2 class="page-title">
+                1802 results matching your query
+
+                <form method="get" action="?" class="filter-sort">
+                    <div class="form-group">
+                        <select title="Sort by">
+                            <option name="price">Price</option>
+                            <option name="rating">Rating</option>
+                            <option name="title">Title</option>
+                        </select>
+                    </div><!-- /.form-group -->
+
+                    <div class="form-group">
+                        <select title="Order">
+                            <option name="ASC">Asc</option>
+                            <option name="DESC">Desc</option>
+                        </select>
+                    </div><!-- /.form-group -->
+                </form>
+            </h2><!-- /.page-title -->
+            <div class="row">
+                <div class="col-sm-4 col-lg-3">
+                    <div class="sidebar">
+                        <div class="widget">
+                            <h2 class="widgettitle">Categories</h2>
+
+                            <ul class="menu">
+                                {{ render(controller(
+                                    'App\\Controller\\ServiceController::listingServices'
+                                )) }}
+
+                            </ul><!-- /.menu -->
+                        </div><!-- /.wifget -->
+                        <div class="widget">
+                            <h2 class="widgettitle">Prestataires</h2>
+
+                            <ul class="menu">
+                                {{ render(controller(
+                                    'App\\Controller\\VendorController::listingVendors'
+                                )) }}
+
+                            </ul><!-- /.menu -->
+                        </div><!-- /.wifget -->
+                    </div><!-- /.sidebar -->
+                </div><!-- /.col-* -->
+
+
+                <div class="col-sm-8 col-lg-9">
+                    <div class="content">
+                        <div class="page-title">
+                            <h1>Service du mois</h1>
+                        </div><!-- /.page-title -->
+
+                        <div class="posts post-detail">
+
+                            {{ render(controller(
+                                'App\\Controller\\ServiceController::imageDuMois'
+                            )) }}
+                        </div><!-- /.post -->
+                    </div><!-- /.content -->
+                </div><!-- /.col-* -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </div><!-- /.main-inner -->
+</div><!-- /.main -->
+{% endblock %}

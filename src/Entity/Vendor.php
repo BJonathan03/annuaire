@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VendorRepository")
@@ -22,11 +23,13 @@ class Vendor extends Visitor
 */
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner votre prénom")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Vous devez renseigner votre numéro de téléphone")
      */
     private $phone;
 
@@ -42,6 +45,7 @@ class Vendor extends Visitor
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Veuillez renseigner votre email de contact")
      */
     private $emailContact;
 
@@ -78,6 +82,7 @@ class Vendor extends Visitor
         $this->images = new ArrayCollection();
         $this->logos = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+
     }
 /*
     public function getId(): ?int

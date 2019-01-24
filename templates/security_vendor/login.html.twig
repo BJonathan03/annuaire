@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
+
+
+
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="page-title">
+                                <h1>Connectez vous !</h1>
+                            </div><!-- /.page-title -->
+                            {% if hasError %}
+                                <div class="alert alert-danger">Une erreur est survenue, le nom d'utilisateur ou le mot de passe est invalide</div>
+                            {% endif %}
+                            <form method="post" action="?">
+                                <div class="form-group">
+                                    <label for="login-form-email">E-mail</label>
+                                    <input type="email" class="form-control" name="_username" id="login-form-email" placeholder="Adresse email..." required value="{{ username }}" >
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    <label for="login-form-password">Mot de passe</label>
+                                    <input type="password" class="form-control" name="_password" id="login-form-password" placeholder="Mot de passe..." required>
+                                </div><!-- /.form-group -->
+
+                                <button type="submit" class="btn btn-primary pull-right">Login</button>
+                            </form>
+                        </div><!-- /.col-sm-4 -->
+                    </div><!-- /.row -->
+
+                </div><!-- /.content -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    {{ form_start(formVendor) }}
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <div class="user-photo">
+                                    <a href="#">
+                                        <img src="assets/img/tmp/agent-2.jpg" alt="User Photo">
+                                        <span class="user-photo-action">Click here to reupload</span>
+                                    </a>
+                                </div><!-- /.user-photo -->
+                            </div><!-- /.widget -->
+                        </div><!-- /.sidebar -->
+                    </div><!-- /.col-* -->
+
+                    <div class="col-sm-8 col-lg-9">
+                        <div class="content">
+                            <div class="page-title">
+                                <h1>Bienvenue sur le formulaire d'inscription des prestataires !</h1>
+                            </div><!-- /.page-title -->
+                            <h4>L'adresse email liée à votre compte est : {{ register.email }} </h4>
+
+                            <div class="background-white p20 mb30">
+                                <h3 class="page-title">
+                                    Information de contact
+                                </h3>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.name) }}
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.phone) }}
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.emailContact) }}
+                                    </div><!-- /.form-group -->
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.tva) }}
+                                    </div><!-- /.form-group -->
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.website) }}
+                                    </div><!-- /.form-group -->
+                                </div><!-- /.row -->
+                            </div>
+
+                            <div class="background-white p20 mb30">
+                                <h3 class="page-title">
+                                    Vos services
+                                </h3>
+                                    {{ form_row(formVendor.service) }}
+                            </div>
+                            <div class="background-white p20 mb30">
+                                <h3 class="page-title">
+                                    Addresse de l'entreprise
+
+                                </h3>
+
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.adresse) }}
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.number) }}
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.cp) }}
+                                    </div><!-- /.form-group -->
+
+                                    <div class="form-group col-sm-6">
+                                        {{ form_row(formVendor.locality) }}
+                                    </div><!-- /.form-group -->
+
+                                </div><!-- /.row -->
+                            </div>
+
+                            <div class="background-white p20 mb30">
+                                <h3 class="page-title">
+                                    Mot de passe
+                                </h3>
+                                {{ form_row(formVendor.password) }}
+                            </div>
+
+                            <button type="submit" class="btn btn-success">
+
+                                Valider votre inscription !
+
+                            </button>
+
+                        </div><!-- /.content -->
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+
+
+    {{ form_end(formVendor) }}
+
+
+
+
+
+
+
+{% endblock %}

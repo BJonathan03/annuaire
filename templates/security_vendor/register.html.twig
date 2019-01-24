@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="main">
+        {{ form_start(form) }}
+        <div class="main-inner">
+            <div class="container">
+                <div class="content">
+
+
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="page-title">
+                                <h1>Inscrivez vous en tant que prestataire !</h1>
+                            </div><!-- /.page-title -->
+                            {# A FAIRE : LE HAS ERROR VERIFICATION EMAIL DB
+                                                    {% if hasError %}
+                                                        <div class="alert alert-danger">Une erreur est survenue, cette adresse email est déjà utilisée</div>
+                                                    {% endif %}
+                            #}
+                            <div class="form-group">
+                                {{ form_row(form.email) }}
+                            </div><!-- /.form-group -->
+
+                            <div class="form-group">
+                                {{ form_row(form.password) }}
+                            </div><!-- /.form-group -->
+
+                            <button type="submit" class="btn btn-primary pull-right">S'inscrire</button>
+
+                        </div><!-- /.col-sm-4 -->
+                    </div><!-- /.row -->
+
+                </div><!-- /.content -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+        {{ form_end(form) }}
+    </div><!-- /.main -->
+{% endblock %}

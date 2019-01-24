@@ -50,6 +50,7 @@ class VendorRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('v')
             ->where('v.name LIKE :name')
+            ->andWhere()
             ->setParameter('name', $string)
             ->orderBy('v.name', 'ASC')
             ;

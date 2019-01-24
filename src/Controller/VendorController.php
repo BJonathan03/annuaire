@@ -3,15 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Vendor;
+use App\Entity\Visitor;
+use App\Form\VendorType;
 use App\Repository\LocalityRepository;
 use App\Repository\VendorRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 
 class VendorController extends AbstractController
 {
+
+
 
     public function listingVendors(VendorRepository $repo)
     {
@@ -22,6 +28,9 @@ class VendorController extends AbstractController
     }
 
     /**
+     *
+     * Cette fonction renvoie le listing des vendeurs
+     *
      * @Route("/vendors", name="vendors")
      */
     public function listing(VendorRepository $repo, LocalityRepository $repo1)
@@ -38,7 +47,7 @@ class VendorController extends AbstractController
 
 
     /**
-     * @Route("/vendor/{id}", name="vendor_show")
+     * @Route("/vendors/{id}", name="vendor_show")
      */
 
     public function show(Vendor $vendor){
@@ -48,7 +57,6 @@ class VendorController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/vendors/search", name="vendor_search")
      *
@@ -57,7 +65,6 @@ class VendorController extends AbstractController
     public function searchVendor(Request $request){
         $name = $request->query->get('name') ?? null;
         $locality = $request->query->get('locality') ?? null;
-      //  $category = $request->query->get('category') ?? null;
 
         $search_name = $this->getRepo()->findVendor($name, $locality);
         return $this->render('vendor/search.html.twig', [
@@ -73,4 +80,6 @@ class VendorController extends AbstractController
         $vr = $this->getDoctrine()->getRepository(Vendor::class);
         return $vr;
     }
+
+
 }

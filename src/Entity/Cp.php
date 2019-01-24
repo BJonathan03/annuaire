@@ -80,4 +80,9 @@ class Cp
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->cp;
+    }
 }
