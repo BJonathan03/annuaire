@@ -8,30 +8,13 @@
                 <div class="content">
 
                     <div class="document-title">
-                        <h1>Bienvenue dans la liste de nos prestataires de services</h1>
+                        {% if vendors.getTotalItemCount != 0 %}
+                        <h1>Votre recherche a généré {{ vendors.getTotalItemCount }} résultats !</h1>
+                        {% else %}
+                        <h1>Malheureusement, votre recherche n'a généré aucune résultat... Désolé !</h1>
+                        {% endif %}
 
                     </div><!-- /.document-title -->
-
-                    <h2 class="page-title">
-                        1802 results matching your query
-
-                        <form method="get" action="?" class="filter-sort">
-                            <div class="form-group">
-                                <select title="Sort by">
-                                    <option name="price">Price</option>
-                                    <option name="rating">Rating</option>
-                                    <option name="title">Title</option>
-                                </select>
-                            </div><!-- /.form-group -->
-
-                            <div class="form-group">
-                                <select title="Order">
-                                    <option name="ASC">Asc</option>
-                                    <option name="DESC">Desc</option>
-                                </select>
-                            </div><!-- /.form-group -->
-                        </form>
-                    </h2><!-- /.page-title -->
 
                     {% for vendor in vendors %}
 
@@ -85,13 +68,9 @@
 
 
                     <div class="pager">
-                        <ul>
-                            <li><a href="#">Prev</a></li>
-                            <li><a href="#">5</a></li>
-                            <li class="active"><a>6</a></li>
-                            <li><a href="#">7</a></li>
-                            <li><a href="#">Next</a></li>
-                        </ul>
+
+                        {{ knp_pagination_render(vendors) }}
+
                     </div><!-- /.pagination -->
                 </div><!-- /.content -->
             </div><!-- /.container -->

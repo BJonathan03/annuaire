@@ -50,52 +50,44 @@
                                     </div><!-- /.form-group -->
 
                                     <div class="form-group col-sm-6">
-                                        {{ form_row(form.phone) }}
-                                    </div><!-- /.form-group -->
-
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.emailContact) }}
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.tva) }}
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.website) }}
-                                    </div><!-- /.form-group -->
-                                </div><!-- /.row -->
-                            </div>
-
-                            <div class="background-white p20 mb30">
-                                <h3 class="page-title">
-                                    Vos services
-                                </h3>
-                                {{ form_row(form.service) }}
-                            </div>
-                            <div class="background-white p20 mb30">
-                                <h3 class="page-title">
-                                    Address de l'entreprise
-
-                                    <a href="#" class="btn btn-primary btn-xs pull-right">Save</a>
-                                </h3>
-
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.adresse) }}
-                                    </div><!-- /.form-group -->
-
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.number) }}
-                                    </div><!-- /.form-group -->
-
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.cp) }}
-                                    </div><!-- /.form-group -->
-
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.locality) }}
+                                        {{ form_row(form.familyName) }}
                                     </div><!-- /.form-group -->
 
                                 </div><!-- /.row -->
+
+                                <div class="background-white p20 mb30">
+                                    <h3 class="page-title">
+                                        Addresse
+
+                                    </h3>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-6">
+                                            {{ form_row(form.adresse) }}
+                                        </div><!-- /.form-group -->
+
+                                        <div class="form-group col-sm-6">
+                                            {{ form_row(form.number) }}
+                                        </div><!-- /.form-group -->
+
+                                        <div class="form-group col-sm-6">
+                                            {{ form_row(form.cp) }}
+                                        </div><!-- /.form-group -->
+
+                                        <div class="form-group col-sm-6">
+                                            {{ form_row(form.locality) }}
+                                        </div><!-- /.form-group -->
+
+                                    </div><!-- /.row -->
+
+                                    <div class="background-white p20 mb30">
+                                        <h3 class="page-title">
+                                            Abonnez vous à notre newsletter !
+                                        </h3>
+                                        {{ form_row(form.newsLetter) }}
+                                    </div>
+                                </div>
+
                             </div>
 
                             <button type="submit" class="btn btn-success">

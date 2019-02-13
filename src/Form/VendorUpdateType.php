@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VendorType extends AbstractType
+class VendorUpdateType extends AbstractType
 {
 
     private function getConfiguration($label, $placeholder, $options = []){
@@ -32,11 +32,6 @@ class VendorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
-            ->add('password',
-                PasswordType::class,
-                $this->getConfiguration("Votre mot de passe", "Veuillez entrez votre mot de passe")
-            )
             ->add(
                 'adresse',
                 TextType::class,
@@ -76,7 +71,6 @@ class VendorType extends AbstractType
             ->add('locality')
             ->add('service')
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -39,23 +39,40 @@ class VendorRepository extends ServiceEntityRepository
     */
 
     /**
-     * @param $name
-     * @param $locality
      * @return Vendor[]
      */
 
-    public function findVendor($name): array
+    public function findByNameCpCategory($searchName, $searchCategory, $searchLocality): array
     {
-        $string = '%' . $name . '%';
 
-        $qb = $this->createQueryBuilder('v')
-            ->where('v.name LIKE :name')
-            ->andWhere()
-            ->setParameter('name', $string)
-            ->orderBy('v.name', 'ASC')
-            ;
+        $qb = $this->createQueryBuilder('v');
 
-        return $qb->getQuery()->getResult();
+ /*
+        $qb->leftJoin('v.logo', 'logo');
+        $qb->addSelect('logo');
+
+*/
+        $string = '%'.$searchName.'%';
+
+        if($searchName !== ''){
+            $qb->andWhere('v.name LIKE :searchName');
+            $qb->setParameter('searchName', $string);
+        }
+        if($searchCategory !== ''){
+            $qb->leftJoin('v.service', 'service');
+            $qb->addSelect('service');
+            $qb->andWhere('service.name LIKE :searchCategory');
+            $qb->setParameter('searchCategory', '%'.$searchCategory.'%');
+        }
+        if($searchLocality !== ''){
+            $qb->leftJoin('v.locality', 'locality');
+            $qb->addSelect('locality');
+            $qb->andWhere('locality.locality LIKE :searchLocality');
+            $qb->setParameter('searchLocality', $searchLocality);
+        }
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
 
     /*

@@ -1,0 +1,22 @@
+{% extends 'security_vendor/new.html.twig' %}
+
+
+{% block contact %}
+    <div class="row">
+        <div class="form-group col-sm-6">
+            {{ form_row(form.name) }}
+        </div><!-- /.form-group -->
+        <div class="form-group col-sm-6">
+            {{ form_row(form.familyName) }}
+        </div><!-- /.form-group -->
+    </div><!-- /.row -->
+{% endblock %}
+
+{% block NewsLetter %}
+    <div class="background-white p20 mb30">
+        <h3 class="page-title">
+            Abonnez vous à notre newsletter !
+        </h3>
+        {{ form_row(form.newsLetter) }}
+    </div>
+{% endblock %}

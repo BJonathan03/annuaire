@@ -9,9 +9,17 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use App\Entity\Vendor;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class VendorFixtures extends Fixture
 {
+
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder){
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
 
@@ -31,7 +39,7 @@ class VendorFixtures extends Fixture
                    ->setDate($faker->dateTimeBetween('-30 years', 'now'))
                    ->setInscription($faker->boolean(75))
                    ->setTry(0)
-                   ->setPassword($faker->password);
+                   ->setPassword($this->encoder->encodePassword($vendor, '123456789'));
 
             $rand = rand(0,9);
 

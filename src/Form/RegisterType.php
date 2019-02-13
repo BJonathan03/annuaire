@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Register;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,6 +32,15 @@ class RegisterType extends AbstractType
                 'password',
                 PasswordType::class,
                 $this->getConfiguration('Mot de passe', 'Choisissez un bon mot de passe...'))
+            ->add(
+                'type',
+                ChoiceType::class,[
+                    'choices' => [
+                        'Prestataire' => 'vendor',
+                        'Utilisateur' => 'user'
+                    ]
+                ]
+            )
         ;
     }
 

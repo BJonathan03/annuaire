@@ -2,21 +2,16 @@
 
 namespace App\Form;
 
-use App\Entity\Vendor;
+use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VendorType extends AbstractType
+class ClientUpdateType extends AbstractType
 {
 
     private function getConfiguration($label, $placeholder, $options = []){
@@ -32,11 +27,6 @@ class VendorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
-            ->add('password',
-                PasswordType::class,
-                $this->getConfiguration("Votre mot de passe", "Veuillez entrez votre mot de passe")
-            )
             ->add(
                 'adresse',
                 TextType::class,
@@ -47,42 +37,33 @@ class VendorType extends AbstractType
                 NumberType::class,
                 $this->getConfiguration("Numéro", "124")
             )
-
             ->add(
                 'name',
                 TextType::class,
                 $this->getConfiguration("Votre nom", "John")
-            )
-            ->add(
-                'phone',
-                TelType::class,
-                $this->getConfiguration("Votre numéro de téléphone", "0032 212121")
-            )
-            ->add(
-                'tva',
+            ) ->add(
+                'familyName',
                 TextType::class,
-                $this->getConfiguration("Votre Tva", "125 - 12552 - 1236")
+                $this->getConfiguration("Votre nom de famille", "Doe")
             )
             ->add(
-                'website',
-                UrlType::class,
-                $this->getConfiguration("L'adresse de votre site web", "www.comete-de-Halley.com")
-            )
-            ->add('emailContact',
-                EmailType::class,
-                $this->getConfiguration("Votre mail de contact", "mon-entreprise@hotmail.com")
+                'newsLetter',
+                ChoiceType::class,[
+                    'choices' => [
+                        'Oui' => 'oui',
+                        'Non' => 'non'
+                    ]
+                ]
             )
             ->add('cp')
             ->add('locality')
-            ->add('service')
         ;
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Vendor::class,
+            'data_class' => Client::class,
         ]);
     }
 }

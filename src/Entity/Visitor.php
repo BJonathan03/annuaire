@@ -20,8 +20,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 abstract class Visitor implements UserInterface
 {
 
-
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

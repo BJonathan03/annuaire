@@ -1,0 +1,37 @@
+<form class="filter" method="get" action="{{ path('search') }}">
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <input type="text" placeholder="name" class="form-control" name="search_name">
+            </div><!-- /.form-group -->
+        </div><!-- /.col-* -->
+
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <select class="form-control" title="Locality" name="search_locality">
+                    {% for locality in locality %}
+                        <option>{{ locality.locality }}</option>
+                    {% endfor %}
+                </select>
+            </div><!-- /.form-group -->
+        </div><!-- /.col-* -->
+
+        <div class="col-sm-12 col-md-4">
+            <div class="form-group">
+                <select class="form-control" title="Select Category" name="search_category">
+                    {% for service in services %}
+                        <option>{{ service.name }}</option>
+                    {% endfor %}
+                </select>
+            </div><!-- /.form-group -->
+        </div><!-- /.col-* -->
+    </div><!-- /.row -->
+
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-primary">Rechercher un prestataire</button>
+        </div><!-- /.col-* -->
+    </div><!-- /.row -->
+</form>

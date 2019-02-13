@@ -19,63 +19,32 @@
                                     </a>
                                 </div><!-- /.user-photo -->
                             </div><!-- /.widget -->
-
-
-                            <div class="widget">
-
-                                <ul class="menu-advanced">
-                                    <li class="active"><a href="{{ path('vendor_profile') }}"><i class="fa fa-user"></i> Modifier votre profil </a></li>
-                                    <li><a href="{{ path('vendor_password') }}"><i class="fa fa-key"></i> Password</a></li>
-                                    <li><a href="{{ path('security_logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
-                                </ul>
-                            </div><!-- /.widget -->
-
                         </div><!-- /.sidebar -->
                     </div><!-- /.col-* -->
 
                     <div class="col-sm-8 col-lg-9">
                         <div class="content">
                             <div class="page-title">
-                                <h1>Modifier votre profile</h1>
+                                <h1>Bienvenue sur le formulaire d'inscription des prestataires !</h1>
                             </div><!-- /.page-title -->
+                            <h4>L'adresse email liée à votre compte est : {{ register.email }} </h4>
 
                             <div class="background-white p20 mb30">
                                 <h3 class="page-title">
                                     Information de contact
                                 </h3>
+                                {% block contact %}
 
-                                <div class="row">
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.name) }}
-                                    </div><!-- /.form-group -->
-
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.phone) }}
-                                    </div><!-- /.form-group -->
-
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.emailContact) }}
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.tva) }}
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group col-sm-6">
-                                        {{ form_row(form.website) }}
-                                    </div><!-- /.form-group -->
-                                </div><!-- /.row -->
+                                {% endblock %}
                             </div>
+                                {% block service %}
+
+                                {% endblock %}
 
                             <div class="background-white p20 mb30">
                                 <h3 class="page-title">
-                                    Vos services
-                                </h3>
-                                {{ form_row(form.service) }}
-                            </div>
-                            <div class="background-white p20 mb30">
-                                <h3 class="page-title">
-                                    Address de l'entreprise
+                                    Addresse
 
-                                    <a href="#" class="btn btn-primary btn-xs pull-right">Save</a>
                                 </h3>
 
                                 <div class="row">
@@ -98,9 +67,20 @@
                                 </div><!-- /.row -->
                             </div>
 
+                            {% block NewsLetter %}
+                            {% endblock %}
+
+                            <div class="background-white p20 mb30">
+                                <h3 class="page-title">
+                                    Mot de passe
+                                </h3>
+                                {{ form_row(form.password) }}
+                            </div>
+
+
                             <button type="submit" class="btn btn-success">
 
-                                Valider vos modificaitons !
+                                Valider votre inscription !
 
                             </button>
 

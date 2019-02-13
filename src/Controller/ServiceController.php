@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Service;
+use App\Repository\LocalityRepository;
 use App\Repository\ServiceRepository;
+use App\Repository\VendorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,7 +33,20 @@ class ServiceController extends AbstractController
     /**
      * @Route("/", name="home")
      */
+    public function index(ServiceRepository $repo2, VendorRepository $repo, LocalityRepository $repo1)
+    {
+        $vendors = $repo->findAll();
+        $locality = $repo1->findAll();
+        $category = $repo2->findAll();
+        return $this->render('service/index.html.twig', [
+            'controller_name' => 'VendorController',
+            'vendors' => $vendors,
+            'locality' => $locality,
+            'services' => $category
 
+        ]);
+    }
+    /*
     public function index(ServiceRepository $repo)
     {
         $services = $repo->findAll();
@@ -40,17 +55,27 @@ class ServiceController extends AbstractController
             'services' => $services
         ]);
     }
-
+*/
     /**
      * @Route("/service", name="service")
      */
-    public function listing(ServiceRepository $repo)
+    public function listing(ServiceRepository $repo2, VendorRepository $repo, LocalityRepository $repo1)
     {
-        $services = $repo->findAll();
+        $vendors = $repo->findAll();
+        $locality = $repo1->findAll();
+        $category = $repo2->findAll();
+        return $this->render('service/liste.html.twig', [
+            'controller_name' => 'VendorController',
+            'vendors' => $vendors,
+            'locality' => $locality,
+            'services' => $category
+
+        ]);
+    /*    $services = $repo->findAll();
         return $this->render('service/liste.html.twig', [
             'controller_name' => 'ServiceController',
             'services' => $services
-        ]);
+        ]);*/
     }
 
     /**

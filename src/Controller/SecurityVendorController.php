@@ -2,34 +2,32 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
+use App\Entity\mailer;
 use App\Entity\PasswordUpdate;
 use App\Entity\Register;
 use App\Entity\Vendor;
 use App\Entity\Visitor;
+use App\Form\ClientType;
+use App\Form\ClientUpdateType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegisterType;
 use App\Form\VendorType;
+use App\Form\VendorUpdateType;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SecurityVendorController extends AbstractController
 {
-    /**
-     * @Route("/security/vendor", name="security_vendor")
-     */
-    public function index()
-    {
-        return $this->render('security_vendor/index.html.twig', [
-            'controller_name' => 'SecurityVendorController',
-        ]);
-    }
+
 
     /**
      * @route("/connexion", name="security_login")
@@ -73,27 +71,16 @@ class SecurityVendorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $mdp = $registration->getPassword();
+            $registration->getType();
             $password = $encoder->encodePassword($registration, $mdp);
             $registration->setPassword($password);
 
             $registration->setToken(bin2hex(openssl_random_pseudo_bytes(20)));
-            $registration->setType('vendor');
-            $link = "http://localhost:8000/vendor/new/" . $registration->getToken();
-            $transport = (new \Swift_SmtpTransport('smtp.mailtrap.io', 25))
-                ->setUsername('658f04574378bc')
-                ->setPassword('48a5526794aa0a');
-            $mailer = new \Swift_Mailer($transport);
 
-            $message = (new \Swift_Message('Bienvenue'))
-                ->setFrom(['test@symfony.com' => 'annuaire.fr'])
-                ->setTo($registration->getEmail())
-                ->setBody('<p>Bonjour, vous venez de vous inscrire sur le site annuaire.be. </p>
-<p>Afin de finaliser votre inscription, veuillez cliquer sur le lien suivant et complètez votre profil : </p><a href=".$link.">' . $link .
-                    '</a><p>Si vous n\'êtes pas à l\'origine de cette inscription, veuillez ne pas tenir compte de cet email. </p>
-<p>Nous vous remercions pour votre confiane et à bientôt sur annuaire.be</p>
-<p>En cas de problème, n\'hésitez pas à nous contacter à <a href="mailto:annuaire@email.be">annuaire@email.be</a></p>', 'text/html');
 
-            $result = $mailer->send($message);
+            $email = new mailer();
+            $email->sendConfirmationMail($registration);
+
             $manager->persist($registration);
             $manager->flush();
 
@@ -109,53 +96,97 @@ class SecurityVendorController extends AbstractController
     }
 
     /**
-     * Cette fonction permet à un prestataire de s'inscrire en complétant son profil, elle n'est accessible que grâce au token
+     * Cette fonction permet à un utilisateur de s'inscrire en complétant son profil, elle n'est accessible que grâce au token et le formulaire dépend du type d'utilisateur
      *
-     * @route("/vendor/new/{token}", name="new_vendor")
+     * @route("/user/new/{token}", name="new_vendor")
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
 
     public function form(Register $register, Request $request, UserPasswordEncoderInterface $encoder ,ObjectManager $manager)
     {
-        $vendor = new Vendor();
+        if($register->getType() === 'vendor') {
 
-        $form = $this->createForm(VendorType::class, $vendor);
-        $form->handleRequest($request);
+            $vendor = new Vendor();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (!password_verify($vendor->getPassword(), $register->getPassword())) {
-                $form->get('password')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe !".$vendor->getPassword().' '.$register->getPassword()));
+            $form = $this->createForm(VendorType::class, $vendor);
+            $form->handleRequest($request);
 
-            } else {
-                $mdp = $vendor->getPassword();
-                $password = $encoder->encodePassword($vendor, $mdp);
-                $vendor->setPassword($password);
+            if ($form->isSubmitted() && $form->isValid()) {
+                if (!password_verify($vendor->getPassword(), $register->getPassword())) {
+                    $form->get('password')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe !" . $vendor->getPassword() . ' ' . $register->getPassword()));
 
-                $vendor->setEmail($register->getEmail());
-                $vendor->setBanni(0);
-                $vendor->setDate(new \DateTime('now'));
-                $vendor->setInscription(1);
-                $vendor->setTry(0);
+                } else {
+                    $mdp = $vendor->getPassword();
+                    $password = $encoder->encodePassword($vendor, $mdp);
+                    $vendor->setPassword($password);
 
-                $manager->persist($vendor);
-                $manager->remove($register);
-                $manager->flush();
+                    $vendor->setEmail($register->getEmail());
+                    $vendor->setBanni(0);
+                    $vendor->setDate(new \DateTime('now'));
+                    $vendor->setInscription(1);
+                    $vendor->setTry(0);
 
-                $this->addFlash(
-                    'success',
-                    "Votre inscription/modification a bien été enregistrée ! Merci de votre confiance {$vendor->getName()}"
-                );
+                    $manager->persist($vendor);
+                    $manager->remove($register);
+                    $manager->flush();
 
-                return $this->redirectToRoute('vendor_show', ['id' => $vendor->getId()]);
-                    }
+                    $this->addFlash(
+                        'success',
+                        "Votre inscription/modification a bien été enregistrée ! Merci de votre confiance {$vendor->getName()}"
+                    );
+                 /*   return $guardHandler->authenticateUserAndHandleSuccess(
+                        $vendor,          // the User object you just created
+                        $request,
+                        $authenticator, // authenticator whose onAuthenticationSuccess you want to use
+                        'main'   // the name of your firewall in security.yaml
+                    ); */
+                    return $this->redirectToRoute('security_login');
+                }
+            }
+
+            return $this->render('security_vendor/new_vendor.html.twig', [
+                'form' => $form->createView(),   //createView : methode de Form qui retourne la 'partie affichage de l'objet)
+                'editMode' => $vendor->getId() !== null,
+                'register' => $register
+            ]);
+        } elseif ($register->getType() === 'user'){
+            $user = new Client();
+            $form = $this->createForm(ClientType::class, $user);
+            $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()) {
+                if (!password_verify($user->getPassword(), $register->getPassword())) {
+                    $form->get('password')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas votre mot de passe !" . $user->getPassword() . ' ' . $register->getPassword()));
+                } else {
+                    $mdp = $user->getPassword();
+                    $password = $encoder->encodePassword($user, $mdp);
+                    $user->setPassword($password);
+
+                    $user->setEmail($register->getEmail());
+                    $user->setBanni(0);
+                    $user->setDate(new \DateTime('now'));
+                    $user->setInscription(1);
+                    $user->setTry(0);
+
+                    $manager->persist($user);
+                    $manager->remove($register);
+                    $manager->flush();
+
+                    $this->addFlash(
+                        'success',
+                        "Votre inscription/modification a bien été enregistrée ! Merci de votre confiance {$user->getName()}, vous pouvez maintenant vous connecter"
+                    );
+
+                    return $this->redirectToRoute('security_login');
+                }
+            }
+            return $this->render('security_vendor/new_client.html.twig', [
+                'form' => $form->createView(),   //createView : methode de Form qui retourne la 'partie affichage de l'objet)
+                'editMode' => $user->getId() !== null,
+                'register' => $register
+            ]);
         }
-
-        return $this->render('security_vendor/new_vendor.html.twig', [
-            'formVendor' => $form->createView(),   //createView : methode de Form qui retourne la 'partie affichage de l'objet)
-            'editMode' => $vendor->getId() !== null,
-            'register' => $register
-        ]);
     }
 
 
@@ -208,29 +239,54 @@ class SecurityVendorController extends AbstractController
      * @Route("/account/profile", name="vendor_profile")
      *
      */
-    public function profile(Request $request, ObjectManager $manager)
+    public function profile(Request $request, ObjectManager $manager, AuthenticationUtils $utils)
     {
         $user = $this->getUser();
-        $form = $this->createForm(VendorType::class, $user);
 
-        $form->handleRequest($request);
+        // $object instance of surfer
+        if($user instanceof Vendor){
+            $form = $this->createForm(VendorUpdateType::class, $user);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $form->handleRequest($request);
 
-            //persist n'est pas obligatoire car l'entité existe déjà
-            $manager->persist($user);
-            $manager->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->addFlash(
-                'success',
-                "Les données du profile ont été enregistrées avec succès !"
-            );
+                //persist n'est pas obligatoire car l'entité existe déjà
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    "Les données du profile ont été enregistrées avec succès !"
+                );
+            }
+
+            return $this->render('security_vendor/update_vendor.html.twig', [
+                'form' => $form->createView()
+            ]);
+
+        } elseif ($user instanceof Client){
+            $form = $this->createForm(ClientUpdateType::class, $user);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                //persist n'est pas obligatoire car l'entité existe déjà
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    "Les données du profile ont été enregistrées avec succès !"
+                );
+            }
+            return $this->render('security_vendor/update_client.html.twig', [
+                'form' => $form->createView()
+            ]);
+        } else {
+            return $this->redirectToRoute('security_login');
         }
-
-        return $this->render('security_vendor/update_vendor.html.twig', [
-            'formVendor' => $form->createView()
-        ]);
-
     }
 
     /**
