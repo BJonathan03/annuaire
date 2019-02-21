@@ -5,17 +5,13 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\PasswordUpdate;
 use App\Entity\Register;
-use App\Entity\Stage;
 use App\Entity\Vendor;
 use App\Entity\Visitor;
 use App\Form\ClientType;
 use App\Form\ClientUpdateType;
 use App\Form\PasswordUpdateType;
-use App\Form\RegisterType;
-use App\Form\StageType;
 use App\Form\VendorType;
 use App\Form\VendorUpdateType;
-use App\service\mailer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -52,47 +48,6 @@ class SecurityVendorController extends AbstractController
 
     public function logout()
     {
-    }
-
-    /**
-     *
-     * Permet de s'inscrire sur le site, envoie un email de confirmation avant inscription finale
-     *
-     * @Route("/inscription", name="security_register")
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, mailer $email)
-    {
-
-        $registration = new Register();
-        $form = $this->createForm(RegisterType::class, $registration);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $mdp = $registration->getPassword();
-            $registration->getType();
-            $password = $encoder->encodePassword($registration, $mdp);
-            $registration->setPassword($password);
-
-            $registration->setToken(bin2hex(openssl_random_pseudo_bytes(20)));
-
-            $email->sendConfirmationMail($registration);
-
-            $manager->persist($registration);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "Vous allez recevoir un mail de confirmation..."
-            );
-            return $this->redirectToRoute('home');
-        }
-        return $this->render('security_vendor/register.html.twig', [
-            'form' => $form->createView()
-        ]);
     }
 
     /**
@@ -231,45 +186,6 @@ class SecurityVendorController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-
-
-    /**
-     * Permet de modifier le mot de passe
-     *
-     * @Route("/security/vendor/stage", name="vendor_stage")
-     *
-     */
-    public function stage(Request $request, ObjectManager $manager)
-    {
-
-        $stage = new Stage();
-
-        $user = $this->getUser();
-
-        $form = $this->createForm(StageType::class, $stage);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $stage->setVendor($user);
-
-            $manager->persist($stage);
-            $manager->flush();
-
-            $this->addFlash(
-                'success',
-                "Votre stage a bien été ajouté..."
-            );
-            return $this->redirectToRoute('home');
-
-        }
-        return $this->render('security_vendor/stage.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
 
 
     /**

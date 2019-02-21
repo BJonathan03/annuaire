@@ -6,15 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VendorRepository")
  * @ORM\Table(name="vendor")
- * @UniqueEntity(
- *     fields={"email"},
- *     message="un autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier"
- * )
  */
 class Vendor extends Visitor
 {

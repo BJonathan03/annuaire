@@ -83,19 +83,20 @@
                         </button>
                     </div><!-- /.header-bottom -->
 
-                    {% for label, messages in app.flashes %}
 
-                        <div class="container">
-                            <div class="alert alert-{{ label }}">
-                                {% for message in messages %}
-                                    <p>{{ message | raw }}</p>
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                    {% endfor %}
                 </div><!-- /.header-content -->
             </div><!-- /.header-inner -->
         </div><!-- /.container -->
     </div><!-- /.header-wrapper -->
+    {% for label, messages in app.flashes %}
+
+        <div class="container header-wrapper">
+            <div class="alert alert-{{ label }}">
+                {% for message in messages %}
+                    <p>{{ message | raw }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% endfor %}
 </header><!-- /.header -->

@@ -18,7 +18,7 @@ class StageController extends AbstractController
 {
 
     /**
-     * Permet de modifier le mot de passe
+     * Permet de gérer les stages
      *
      * @Route("/security/vendor/stage", name="vendor_stage")
      *

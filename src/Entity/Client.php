@@ -6,10 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
- * @UniqueEntity(
- *     fields={"email"},
- *     message="un autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier"
- * )
  */
 class Client extends Visitor
 {
