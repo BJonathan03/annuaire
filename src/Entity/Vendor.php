@@ -6,10 +6,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VendorRepository")
  * @ORM\Table(name="vendor")
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="un autre utilisateur s'est déjà inscrit avec cette adresse email, merci de la modifier"
+ * )
  */
 class Vendor extends Visitor
 {
@@ -74,6 +79,11 @@ class Vendor extends Visitor
      */
     private $pictures;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Stage", mappedBy="vendor", orphanRemoval=true)
+     */
+    private $stage;
+
 
     public function __construct()
     {
@@ -82,6 +92,7 @@ class Vendor extends Visitor
         $this->images = new ArrayCollection();
         $this->logos = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+        $this->stage = new ArrayCollection();
 
     }
 /*
@@ -276,6 +287,37 @@ class Vendor extends Visitor
             // set the owning side to null (unless already changed)
             if ($picture->getPictures() === $this) {
                 $picture->setPictures(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stage[]
+     */
+    public function getStage(): Collection
+    {
+        return $this->stage;
+    }
+
+    public function addStage(Stage $stage): self
+    {
+        if (!$this->stage->contains($stage)) {
+            $this->stage[] = $stage;
+            $stage->setVendor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStage(Stage $stage): self
+    {
+        if ($this->stage->contains($stage)) {
+            $this->stage->removeElement($stage);
+            // set the owning side to null (unless already changed)
+            if ($stage->getVendor() === $this) {
+                $stage->setVendor(null);
             }
         }
 

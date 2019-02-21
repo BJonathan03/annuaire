@@ -3,17 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Client;
-use App\Entity\mailer;
 use App\Entity\PasswordUpdate;
 use App\Entity\Register;
+use App\Entity\Stage;
 use App\Entity\Vendor;
 use App\Entity\Visitor;
 use App\Form\ClientType;
 use App\Form\ClientUpdateType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegisterType;
+use App\Form\StageType;
 use App\Form\VendorType;
 use App\Form\VendorUpdateType;
+use App\service\mailer;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -60,7 +62,7 @@ class SecurityVendorController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
-    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, mailer $email)
     {
 
         $registration = new Register();
@@ -77,8 +79,6 @@ class SecurityVendorController extends AbstractController
 
             $registration->setToken(bin2hex(openssl_random_pseudo_bytes(20)));
 
-
-            $email = new mailer();
             $email->sendConfirmationMail($registration);
 
             $manager->persist($registration);
@@ -231,6 +231,45 @@ class SecurityVendorController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+
+
+    /**
+     * Permet de modifier le mot de passe
+     *
+     * @Route("/security/vendor/stage", name="vendor_stage")
+     *
+     */
+    public function stage(Request $request, ObjectManager $manager)
+    {
+
+        $stage = new Stage();
+
+        $user = $this->getUser();
+
+        $form = $this->createForm(StageType::class, $stage);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $stage->setVendor($user);
+
+            $manager->persist($stage);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Votre stage a bien été ajouté..."
+            );
+            return $this->redirectToRoute('home');
+
+        }
+        return $this->render('security_vendor/stage.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
 
 
     /**

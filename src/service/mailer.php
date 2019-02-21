@@ -6,7 +6,7 @@
  * Time: 21:13
  */
 
-namespace App\Entity;
+namespace App\service;
 
 use App\Entity\Register;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as Generator;
@@ -15,15 +15,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class mailer
 {
     /**
-     *
-     * CODE MR BERGER A TRAVAILLER
-     *
      * @var \Swift_Mailer
      */
     private $mailer;
 
-//METTRE LE MAILER DANS SRC SERVICE/MAILER!!!!
-    public function __construct(\Swift_Mailer $mailer )
+
+    public function __construct(\Swift_Mailer $mailer)
     {
         $this->mailer = $mailer;
     }

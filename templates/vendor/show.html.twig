@@ -2,101 +2,137 @@
 
 {% block body %}
     <div class="main">
-        <div class="main-inner">
-            <div class="container">
-                <div class="content">
+    <div class="main-inner">
+        <div class="container">
+            <div class="content">
 
 
-                    <div class="document-title">
-                        <h1>{{ vendor.name }}</h1>
-                        <h2 style="color:white">Nos services : </h2>
-                        {% for services in vendor.service %}
-                            <ul class="breadcrumb">
-                                <li><a href="{{ path('service_show', {'id':services.id}) }}">{{ services.name }}</a>
-                                </li>
-                            </ul>
-                        {% endfor %}
+                <div class="document-title">
+                    <h1>{{ vendor.name }}</h1>
+                    <h2 style="color:white">Nos services : </h2>
+                    {% for services in vendor.service %}
+                        <ul class="breadcrumb">
+                            <li><a href="{{ path('service_show', {'id':services.id}) }}">{{ services.name }}</a>
+                            </li>
+                        </ul>
+                    {% endfor %}
 
-                    </div><!-- /.document-title -->
+                </div><!-- /.document-title -->
 
-                    <div class="mb80">
-                        <div class="hero-slider">
-                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="item active">
+                <div class="mb80">
+                    <div class="hero-slider">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
 
-                                        <div class="card-row-image" data-background-image="{{ asset('assets/img/tmp/slider-2.jpg') }}">
-                                            <img src="{{ asset('assets/img/tmp/slider-2.jpg')}}" alt="Désolé, l'affichage n'est pas proposé pour le moment">
+                                    <div class="card-row-image"
+                                         data-background-image="{{ asset('assets/img/tmp/slider-2.jpg') }}">
+                                        <img src="{{ asset('assets/img/tmp/slider-2.jpg') }}"
+                                             alt="Désolé, l'affichage n'est pas proposé pour le moment">
+                                        <div class="carousel-caption">
+                                            <div class="hero-slider-content">
+                                                <h1>Hello</h1>
+                                            </div><!-- /.hero-slider-content -->
+                                        </div><!-- /.carousel-caption -->
+                                    </div>
+                                </div><!-- /.item -->
+                                {% for pictures in vendor.pictures %}
+                                    <div class="item">
+                                        <div class="card-row-image"
+                                             data-background-image="{{ asset('assets/img/tmp/slider-2.jpg') }}">
+                                            <img src="{{ pictures.url() }}"
+                                                 alt="Désolé, l'affichage n'est pas proposé pour le moment">
                                             <div class="carousel-caption">
                                                 <div class="hero-slider-content">
-                                                    <h1>Hello</h1>
+                                                    <h1>{{ pictures.sequence }}</h1>
                                                 </div><!-- /.hero-slider-content -->
                                             </div><!-- /.carousel-caption -->
                                         </div>
                                     </div><!-- /.item -->
-                                    {% for pictures in vendor.pictures %}
-                                        <div class="item">
-                                            <div class="card-row-image" data-background-image="{{ asset('assets/img/tmp/slider-2.jpg') }}">
-                                                <img src="{{ pictures.url()}}" alt="Désolé, l'affichage n'est pas proposé pour le moment">
-                                                <div class="carousel-caption">
-                                                    <div class="hero-slider-content">
-                                                        <h1>{{ pictures.sequence }}</h1>
-                                                    </div><!-- /.hero-slider-content -->
-                                                </div><!-- /.carousel-caption -->
-                                            </div>
-                                        </div><!-- /.item -->
-                                    {% endfor %}
-                                </div><!-- /.carousel-inner -->
+                                {% endfor %}
+                            </div><!-- /.carousel-inner -->
 
-                                 <div>   <!-- Controls -->
-                                    <a class="left carousel-control" href="#carousel-example-generic" role="button"
-                                       data-slide="prev">
-                                        <i class="fa fa-long-arrow-left"></i>
-                                    </a>
+                            <div>   <!-- Controls -->
+                                <a class="left carousel-control" href="#carousel-example-generic" role="button"
+                                   data-slide="prev">
+                                    <i class="fa fa-long-arrow-left"></i>
+                                </a>
 
-                                    <a class="right carousel-control" href="#carousel-example-generic" role="button"
-                                       data-slide="next">
-                                        <i class="fa fa-long-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>    <!-- /.hero-slider -->
-                        </div>
+                                <a class="right carousel-control" href="#carousel-example-generic" role="button"
+                                   data-slide="next">
+                                    <i class="fa fa-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>    <!-- /.hero-slider -->
                     </div>
+                </div>
+
+
+                {% if vendor.stage is not empty %}
+                <div class="page-title">
+                    <h1>Stages proposés</h1>
+                </div><!-- /.page-title -->
+                    <div class="posts">
+                {% for stage in vendor.stage %}
+
+                    <div class="post post-boxed">
+                        <div class="post-content">
+                            <h2>{{ stage.title }}</h2>
+                            <h3>{{ stage.description }}</h3>
+                            <p>{{ stage.information }}</p>
+                        </div><!-- /.post-content -->
+
+                        <div class="post-meta clearfix">
+                            <div class="post-meta-author">Début : {{ stage.begin |date("d-m-Y") }}</div>
+                            <div class="post-meta-date"></div><!-- /.post-meta-date -->
+                            <div class="post-meta-author">Fin : {{ stage.end |date("d-m-Y") }}</div>
+                            <div class="post-meta-date"></div><!-- /.post-meta-date -->
+                            <div class="post-meta-author">Prix : {{ stage.price }}</div>
+                        </div><!-- /.post-meta -->
+                    </div><!-- /.post -->
+
+                    {% endfor %}
+                    </div>
+                    {% endif %}
+
+                <br>
+                <div class="page-title">
+                    <h1>Informations de contact</h1>
+                </div><!-- /.page-title -->
                     <div class="posts post-detail">
 
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <h3>Addresse</h3>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h3>Addresse</h3>
 
-                                    <p>
-                                        {{ vendor.adresse }} {{ vendor.number }}<br>
-                                        {{ vendor.cp.cp }} {{ vendor.locality.locality }}<br>
-                                        <a href="{{ vendor.website }}"> {{ vendor.website }} </a>
-                                    </p>
+                                <p>
+                                    {{ vendor.adresse }} {{ vendor.number }}<br>
+                                    {{ vendor.cp.cp }} {{ vendor.locality.locality }}<br>
+                                    <a href="{{ vendor.website }}"> {{ vendor.website }} </a>
+                                </p>
 
-                                </div><!-- /.col-sm-4 -->
+                            </div><!-- /.col-sm-4 -->
 
-                                <div class="col-sm-4">
-                                    <h3>Contacts</h3>
+                            <div class="col-sm-4">
+                                <h3>Contacts</h3>
 
-                                    <p>
-                                        Par telephone : {{ vendor.phone }} <br>
-                                        Par email : <a
-                                                href="mailto({{ vendor.emailContact }}"> {{ vendor.emailContact }}</a>
-                                    </p>
-                                </div><!-- /.col-sm-4 -->
+                                <p>
+                                    Par telephone : {{ vendor.phone }} <br>
+                                    Par email : <a
+                                            href="mailto({{ vendor.emailContact }}"> {{ vendor.emailContact }}</a>
+                                </p>
+                            </div><!-- /.col-sm-4 -->
 
-                                <div class="col-sm-4">
-                                    <h3>Social Profiles</h3>
+                            <div class="col-sm-4">
+                                <h3>Social Profiles</h3>
 
-                                    <ul class="social-links nav nav-pills">
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    </ul>
-                                </div><!-- /.col-sm-4 -->
-                            </div><!-- /.row -->
-
+                                <ul class="social-links nav nav-pills">
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                </ul>
+                            </div><!-- /.col-sm-4 -->
+                        </div><!-- /.row -->
                     </div>
                 </div>
             </div>

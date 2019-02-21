@@ -45,7 +45,7 @@ abstract class Visitor implements UserInterface
     private $banni;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Email(message="Veuillez donner un email valide !")
      *
      */

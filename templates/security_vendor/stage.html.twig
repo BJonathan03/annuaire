@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4 col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget">
+                                <div class="user-photo">
+
+                                </div><!-- /.user-photo -->
+                            </div><!-- /.widget -->
+                            <div class="widget">
+                                {#  {{ form_row(form.logoFile) }} #}
+                            </div>
+
+                            <div class="widget">
+
+                                <ul class="menu-advanced">
+                                    <li><a href="{{ path('vendor_profile') }}"><i class="fa fa-user"></i> Modifier votre
+                                            profil </a></li>
+                                    <li class="active"><a href="{{ path('vendor_stage') }}"><i class="fa fa-star"></i>
+                                            Mes stages </a></li>
+                                    <li><a href="{{ path('vendor_password') }}"><i class="fa fa-key"></i> Password</a>
+                                    </li>
+                                    <li><a href="{{ path('security_logout') }}"><i class="fa fa-sign-out"></i>
+                                            Logout</a></li>
+                                </ul>
+                            </div><!-- /.widget -->
+
+                        </div><!-- /.sidebar -->
+                    </div><!-- /.col-* -->
+
+                    <div class="col-sm-8 col-lg-9">
+                        <div class="content">
+                            <div class="page-title">
+                                <h1>Créer un stage</h1>
+                            </div>
+
+                            <div class="background-white p30 mb30">
+                                <h3 class="page-title">Description</h3>
+                                <div class="form-group">
+                                    {{ form_row(form.title) }}
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    {{ form_row(form.description) }}
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    {{ form_row(form.information) }}
+                                </div><!-- /.form-group -->
+                            </div><!-- /.box -->
+
+                            <div class="background-white p30 mb30">
+                                <h3 class="page-title">Attributes</h3>
+
+                                <div class="form-group">
+                                    <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+                                    {{ form_row(form.price) }}
+                                </div><!-- /.form-group -->
+                                <span class="input-group-addon"><i class="fa fa-building-o"></i></span>
+                                <div class="form-group">
+                                    <label>Date de début</label>
+                                    {{ form_widget(form.begin, { 'attr': {'label' : 'date de début','min' : "now"|date("Y-m-d") }}) }}
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <label>Date de fin</label>
+                                    {{ form_widget(form.end, { 'attr' : { 'min' : "now"|date("Y-m-d") }}) }}
+                                </div><!-- /.form-group -->
+
+                                <button type="submit" class="btn btn-success">
+
+                                    Enregister votre stage !
+
+                                </button>
+                            </div><!-- /.box -->
+{% for stage in vendor.stage %}
+                                    <div class="col-sm-6 col-md-4 col-lg-3">
+                                        <div class="card-simple" data-background-image="assets/img/tmp/product-1.jpg">
+                                            <div class="card-simple-background">
+                                                <div class="card-simple-content">
+                                                    <h2><a href="listing-detail.html">{{ stage.title }}</a></h2>
+                                                    <div class="card-simple-rating">
+                                                        <i>{{ stage.begin | date("j/m/Y")}} au {{ stage.end | date("j/m/Y")}}</i>
+                                                    </div><!-- /.card-rating -->
+                                                </div><!-- /.card-simple-content -->
+
+                                                <div class="card-simple-label">{{ stage.price }} &#8364</div>
+
+                                                <div class="card-simple-price" style="background-color: #c7254e" ><a href="{{ path('stage_delete', {'id': stage.id}) }}" style="color: #090909">Suppression</a></div>
+
+                                            </div><!-- /.card-simple-background -->
+                                        </div><!-- /.card-simple -->
+                                    </div><!-- /.col-* -->
+                            {% endfor %}
+                        </div><!-- /.content -->
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+
+
+    {{ form_end(form) }}
+
+
+
+
+
+
+
+{% endblock %}
