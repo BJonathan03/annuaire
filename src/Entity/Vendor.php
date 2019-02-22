@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Picture;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -79,6 +80,23 @@ class Vendor extends Visitor
      */
     private $stage;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="vendor", orphanRemoval=true, cascade={"persist"})
+     */
+    private $picture;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
+
+    /**
+     * @Assert\All({
+     *     @Assert\Image(mimeTypes="image/jpeg")
+     * })
+     */
+    private $pictureFile;
+
 
     public function __construct()
     {
@@ -88,6 +106,7 @@ class Vendor extends Visitor
         $this->logos = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->stage = new ArrayCollection();
+        $this->picture = new ArrayCollection();
 
     }
 /*
@@ -265,17 +284,17 @@ class Vendor extends Visitor
         return $this->pictures;
     }
 
-    public function addPicture(Image $picture): self
+    public function addPictures(Image $pictures): self
     {
-        if (!$this->pictures->contains($picture)) {
-            $this->pictures[] = $picture;
-            $picture->setPictures($this);
+        if (!$this->pictures->contains($pictures)) {
+            $this->pictures[] = $pictures;
+            $pictures->setPictures($this);
         }
 
         return $this;
     }
 
-    public function removePicture(Image $picture): self
+    public function removePictures(Image $picture): self
     {
         if ($this->pictures->contains($picture)) {
             $this->pictures->removeElement($picture);
@@ -318,5 +337,63 @@ class Vendor extends Visitor
 
         return $this;
     }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPicture(): Collection
+    {
+        return $this->picture;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
+
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->picture->contains($picture)) {
+            $this->picture[] = $picture;
+            $picture->setVendor($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $pictureFile
+     * @return Vendor
+     */
+
+    public function setPictureFile($pictureFile): self
+    {
+        foreach($pictureFile as $pf){
+            $picture = new Picture();
+            $picture->setImageFile($pf);
+            $this->addPicture($picture);
+        }
+        $this->pictureFile = $pictureFile;
+        return $this;
+    }
+
+
 
 }

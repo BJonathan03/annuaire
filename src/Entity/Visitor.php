@@ -86,6 +86,11 @@ abstract class Visitor implements UserInterface
     private $locality;
 
     /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -225,9 +230,11 @@ abstract class Visitor implements UserInterface
 
     public function getRoles()
     {
-        $roles[] = 'ROLE_USER';
+        if(empty($this->roles)){
+            return ['ROLE_USER'];
+        }
 
-        return $roles;
+        return $this->roles;
     }
 
     public function getSalt()
@@ -243,6 +250,10 @@ abstract class Visitor implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    function addRole($role) {
+        $this->roles[] = $role;
     }
 
 

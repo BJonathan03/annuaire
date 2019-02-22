@@ -71,14 +71,12 @@ class VendorUpdateType extends AbstractType
             ->add('cp')
             ->add('locality')
             ->add('service')
-        /*    ->add(
-                'logoFile',
-                FileType::class,
-                [
-                    'required' => false,
-                    'mapped'=>false
-                ]
-            )*/
+            ->add(
+                'pictureFile',
+                FileType::class, [
+                'required' => false,
+                'multiple' =>true
+            ])
         ;
     }
 

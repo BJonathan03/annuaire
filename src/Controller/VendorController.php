@@ -35,14 +35,21 @@ class VendorController extends AbstractController
      *
      * @Route("/vendors", name="vendors")
      */
-    public function listing(VendorRepository $repo, LocalityRepository $repo1, ServiceRepository $repo2)
+    public function listing(PaginatorInterface $paginator, Request $request, VendorRepository $repo, LocalityRepository $repo1, ServiceRepository $repo2)
     {
         $vendors = $repo->findAll();
         $locality = $repo1->findAll();
         $category = $repo2->findAll();
+
+        $result = $paginator->paginate(
+            $vendors,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 5)
+        );
+
         return $this->render('vendor/liste.html.twig', [
             'controller_name' => 'VendorController',
-            'vendors' => $vendors,
+            'vendors' => $result,
             'locality' => $locality,
             'services' => $category
 

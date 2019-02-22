@@ -206,6 +206,7 @@ class SecurityVendorController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
+
                 //persist n'est pas obligatoire car l'entité existe déjà
                 $manager->persist($user);
                 $manager->flush();
