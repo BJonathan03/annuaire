@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12">
+                        <div class="content">
+                            <div class="page-title">
+                                <h1>Modifier un service</h1>
+                            </div>
+
+                            <div class="background-white p30 mb30">
+                                <div class="form-group">
+                                    {{ form_row(form.name) }}
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    {{ form_row(form.description) }}
+                                </div><!-- /.form-group -->
+
+                                <div class="form-group">
+                                    {{ form_row(form.front) }}
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    {{ form_row(form.validity) }}
+                                </div><!-- /.form-group -->
+                           {#<div class="form-group">
+                                    {{ form_row(form.photo.url) }}
+                                </div><!-- /.form-group -->#}
+                                <button type="submit" class="btn btn-success">
+
+                                    Enregister vos modification !
+
+                                </button>
+                            </div><!-- /.box -->
+                        </div><!-- /.content -->
+                    </div><!-- /.col-* -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.main-inner -->
+    </div><!-- /.main -->
+
+
+    {{ form_end(form) }}
+{% endblock %}
